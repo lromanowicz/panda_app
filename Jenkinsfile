@@ -49,10 +49,10 @@ pipeline {
                 }
             }
         }
-        post {
+    }
+    post {
             always {
                 sh "docker stop pandaapp"
             }
-        }
     }
 }
