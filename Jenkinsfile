@@ -28,7 +28,7 @@ pipeline {
         }
         stage('Build docker image') {
             steps {
-                sh "mvn package -Pdocker"
+                sh "mvn package -Pdocker -Dmaven.test.skip=true"
             }
         }
         stage('Run docker container') {
