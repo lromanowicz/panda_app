@@ -9,7 +9,7 @@ pipeline {
     }
 
     environment {
-        IMAGE = sh script: 'mvn help:evaluate -Dexpression=project.artifactid -q -DforceStdout', returnStdout: true
+        IMAGE = sh script: 'mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout', returnStdout: true
         VERSION = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
     }
 
