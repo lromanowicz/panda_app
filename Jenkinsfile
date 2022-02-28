@@ -11,7 +11,6 @@ pipeline {
     environment {
         IMAGE = sh script: 'mvn help:evaluate -Dexpression=project.artifactid -q -DforceStdout', returnStdout: true
         VERSION = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
-        MAVEN_GLOBAL_SETTINGS
     }
 
     stages {
