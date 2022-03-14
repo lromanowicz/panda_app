@@ -1,0 +1,5 @@
+---
+repository_url: http://192.168.44.44:8086/artifactory/libs-release-local
+username: admin
+password: password
+artifact_name: ./application.jar

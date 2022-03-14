@@ -49,10 +49,35 @@ pipeline {
                 }
             }
         }
+        stage('Run Terraform') {
+            steps {
+                withCredentials([file(credentialsId: 'panda', variable: 'terraformpanda')]) {
+                    sh "cp \$terraformpanda ..panda.pem"
+                }
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS']]) {
+                    dir('infrastructure/terraform') { 
+                        sh 'terraform init && terraform apply -auto-approve'
+                    }
+                }
+            }
+        }
+        stage('Copy Ansible role') {
+            steps {
+                sh 'cp -r infrastructure/ansible/panda/ /etc/ansible/roles/'
+            }
+        }
+        stage('Run Ansible') {
+            steps {
+                dir('infrastructure/ansible') { 
+                    sh 'chmod 600 ../panda.pem'
+                    sh 'ansible-playbook -i ./inventory playbook.yml'
+                }
+            }
+        }
     }
     post {
-            always {
-                sh "docker stop pandaapp"
-            }
+        always {
+            sh "docker stop pandaapp"
+        }
     }
 }
