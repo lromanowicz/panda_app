@@ -6,11 +6,13 @@ pipeline {
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "mnc3"
+        terraform
     }
 
     environment {
         IMAGE = sh script: 'mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout', returnStdout: true
         VERSION = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
+        ANSIBLE = tool name: 'Ansible', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
     }
 
     stages {
