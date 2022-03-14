@@ -56,7 +56,7 @@ pipeline {
                 }
 
                 dir('infrastructure/terraform') { 
-                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS']]) {
+                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS_CREDS']]) {
                         sh 'terraform init && terraform apply -auto-approve -var-file panda.tfvars'
                     }
                 }
@@ -80,7 +80,7 @@ pipeline {
             steps {
                 input 'Remove environment'
                 dir('infrastructure/terraform') { 
-                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS']]) {
+                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS_CREDS']]) {
                         sh 'terraform destroy -auto-approve -var-file panda.tfvars'
                     }
                 }
@@ -95,7 +95,7 @@ pipeline {
         }
         failure {
             dir('infrastructure/terraform') { 
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS']]) {
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS_CREDS']]) {
                     sh 'terraform destroy -auto-approve -var-file panda.tfvars'
                 }
             }
