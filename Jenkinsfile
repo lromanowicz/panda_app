@@ -36,12 +36,12 @@ pipeline {
                 sh "docker run -d -p 8080:8080 --name pandaapp ${IMAGE}:${VERSION}"
             }
         }
-        stage('Test') {
-            steps {
-                // Run Maven on a Unix agent.
-                sh "mvn test -Pselenium"
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         // Run Maven on a Unix agent.
+        //         sh "mvn test -Pselenium"
+        //     }
+        // }
         stage('Deploy to Artifactory') {
             steps {
                 configFileProvider([configFile(fileId: '0dbda896-db8e-4aae-b00a-930bdf5ecac2', variable: 'MAVEN_GLOBAL_SETTINGS')]) {
