@@ -56,6 +56,9 @@ pipeline {
                 dir('infrastructure/terraform') {
                     withCredentials([file(credentialsId: 'panda', variable: 'terraformpanda')]) {
                         sh "cp \$terraformpanda ..panda.pem"
+                        sh "ls -la"
+                        sh "cd .."
+                        sh "ls -la"
                     }
                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS_CREDS']]) {
                         sh 'terraform init && terraform apply -auto-approve -var-file panda.tfvars'
@@ -72,6 +75,9 @@ pipeline {
         stage('Run Ansible') {
             steps {
                 dir('infrastructure/ansible') {
+                    sh "ls -la"
+                    sh "cd .."
+                    sh "ls -la"
                     sh 'chmod 600 ../panda.pem'
                     sh 'ansible-playbook -i ./inventory playbook.yml -e ansible_python_interpreter=/usr/bin/python3'
                 }
